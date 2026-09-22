@@ -194,4 +194,4 @@ release-patch:
 
 ################################################################
 
-.PHONY: all ci clean stage deps init style lint test doc update-to-latest update-to-main update-to-version update-dotfiles update-partials release-major release-minor release-patch
+.PHONY: $(1) all ci clean stage deps init style lint test doc update-to-latest update-to-main update-to-version update-dotfiles update-partials release-major release-minor release-patch
