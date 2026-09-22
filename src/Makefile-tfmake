@@ -59,6 +59,10 @@ deps: stage
 
 	$(call deps_extra)
 
+deps-extra-apt:
+	apt-get update
+	apt-get install -y markdownlint
+
 init:
 	rm -f .terraform.lock.hcl
 	terraform init
@@ -194,4 +198,4 @@ release-patch:
 
 ################################################################
 
-.PHONY: $(1) all ci clean stage deps init style lint test doc update-to-latest update-to-main update-to-version update-dotfiles update-partials release-major release-minor release-patch
+.PHONY: $(1) all ci clean stage deps deps-extra-apt init style lint test doc update-to-latest update-to-main update-to-version update-dotfiles update-partials release-major release-minor release-patch
