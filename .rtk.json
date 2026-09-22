@@ -1,0 +1,15 @@
+{
+  "resources": [
+    {
+      "path": "src/Makefile-tfmake",
+      "type": "makefile",
+      "params": {
+        "variable": "TFMAKE_VERSION"
+      }
+    },
+    {
+      "path": "CHANGELOG.md",
+      "type": "keep-a-changelog"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+TFMAKE_VERSION = 1.1.1-pre.0
+
+################################################################
+TFLINT_VERSION = 0.63.1
+TERRAFORM_DOCS_VERSION = 0.24.0
+TRIVY_VERSION = 0.71.1
+
+################################################################
+# User configuration variables
+# These variables should be stored in tfmake.yml config file,
+# and they will be parsed using yq https://github.com/mikefarah/yq
+# Example:
+# ---
+# package_name: somepackage
+# author: Some Author
+
+# PACKAGE_NAME is the name of the Terraform module
+PACKAGE_NAME=$(shell yq .package_name tfmake.yml)
+
+# AUTHOR is the author of the node.js package
+AUTHOR ?= $(shell yq .author tfmake.yml)
+
+$(info ################################################################)
+$(info Building Terraform module using TFMake with user configurations...)
+$(info - Package name = ${PACKAGE_NAME})
+$(info - Author = ${AUTHOR})
+
+################################################################
+# Base targets
+
+# CI target to be executed by CI/CD tool
+all:ci
+ci: clean stage deps init style lint doc
+
+clean:
+	rm -rf .terraform
+
+stage:
+	mkdir -p stage/
+
+deps: stage
+	curl -sSLo stage/tflint_linux_amd64.zip https://github.com/terraform-linters/tflint/releases/download/v$(TFLINT_VERSION)/tflint_linux_amd64.zip
+	curl -sSLo stage/tflint_checksums.txt https://github.com/terraform-linters/tflint/releases/download/v$(TFLINT_VERSION)/checksums.txt
+	cd stage/ && grep ' tflint_linux_amd64.zip$$' tflint_checksums.txt | sha256sum -c -
+	cd stage/ && unzip -o tflint_linux_amd64.zip tflint
+	install -m 0755 stage/tflint /usr/local/bin/tflint
+
+	curl -sSLo stage/terraform-docs.tar.gz https://github.com/terraform-docs/terraform-docs/releases/download/v$(TERRAFORM_DOCS_VERSION)/terraform-docs-v$(TERRAFORM_DOCS_VERSION)-linux-amd64.tar.gz
+	curl -sSLo stage/terraform-docs_checksums.txt https://github.com/terraform-docs/terraform-docs/releases/download/v$(TERRAFORM_DOCS_VERSION)/checksums.txt
+	cd stage/ && grep ' terraform-docs-v$(TERRAFORM_DOCS_VERSION)-linux-amd64.tar.gz$$' terraform-docs_checksums.txt | sha256sum -c -
+	cd stage/ && tar -xzf terraform-docs.tar.gz --no-same-owner terraform-docs
+	install -m 0755 stage/terraform-docs /usr/local/bin/terraform-docs
+
+	curl -sSLo stage/trivy.tar.gz https://github.com/aquasecurity/trivy/releases/download/v$(TRIVY_VERSION)/trivy_$(TRIVY_VERSION)_Linux-64bit.tar.gz
+	curl -sSLo stage/trivy_checksums.txt https://github.com/aquasecurity/trivy/releases/download/v$(TRIVY_VERSION)/trivy_$(TRIVY_VERSION)_checksums.txt
+	cd stage/ && grep ' trivy_$(TRIVY_VERSION)_Linux-64bit.tar.gz$$' trivy_checksums.txt | sha256sum -c -
+	cd stage/ && tar -xzf trivy.tar.gz --no-same-owner trivy
+	install -m 0755 stage/trivy /usr/local/bin/trivy
+
+init:
+	rm -f .terraform.lock.hcl
+	terraform init
+
+style:
+	terraform fmt -recursive
+
+lint: init
+	terraform validate
+	tflint --chdir=.
+	trivy config --exit-code 1 .
+
+doc:
+	sed -zi 's/# Terraform Doc.*/# Terraform Doc/' README.md
+	terraform-docs markdown . > stage/terraform-docs-output.md
+	sed -i '/# Terraform Doc/r stage/terraform-docs-output.md' README.md
+
+.PHONY: clean stage deps init style lint doc
