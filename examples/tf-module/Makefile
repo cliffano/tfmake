@@ -38,6 +38,16 @@ clean:
 stage:
 	mkdir -p stage/
 
+init:
+	rm -f .terraform.lock.hcl
+	terraform init
+
+style:
+	terraform fmt -recursive
+
+################################################################
+# Dependencies targets
+
 deps: stage
 	curl -sSLo stage/tflint_linux_amd64.zip https://github.com/terraform-linters/tflint/releases/download/v$(TFLINT_VERSION)/tflint_linux_amd64.zip
 	curl -sSLo stage/tflint_checksums.txt https://github.com/terraform-linters/tflint/releases/download/v$(TFLINT_VERSION)/checksums.txt
@@ -63,12 +73,8 @@ deps-extra-apt:
 	apt-get update
 	apt-get install -y markdownlint
 
-init:
-	rm -f .terraform.lock.hcl
-	terraform init
-
-style:
-	terraform fmt -recursive
+################################################################
+# Test targets
 
 lint: init
 	terraform validate
@@ -77,6 +83,16 @@ lint: init
 
 test:
 	echo "PLACEHOLDER"
+
+test-examples:
+	mkdir -p stage/test-examples/
+	cd examples && \
+	for f in *.sh; do \
+	  bash -x "$$f"; \
+	done
+
+################################################################
+# Documentation targets
 
 doc:
 	sed -zi 's/# Terraform Doc.*/# Terraform Doc/' README.md
