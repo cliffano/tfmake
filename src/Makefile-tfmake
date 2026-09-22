@@ -74,4 +74,4 @@ doc:
 	terraform-docs markdown . > stage/terraform-docs-output.md
 	sed -i '/# Terraform Doc/r stage/terraform-docs-output.md' README.md
 
-.PHONY: clean stage deps init style lint doc
+.PHONY: $(1) all ci clean stage deps init style lint doc
