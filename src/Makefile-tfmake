@@ -69,9 +69,12 @@ lint: init
 	tflint --chdir=.
 	trivy config --exit-code 1 .
 
+test:
+	echo "PLACEHOLDER"
+
 doc:
 	sed -zi 's/# Terraform Doc.*/# Terraform Doc/' README.md
 	terraform-docs markdown . > stage/terraform-docs-output.md
 	sed -i '/# Terraform Doc/r stage/terraform-docs-output.md' README.md
 
-.PHONY: $(1) all ci clean stage deps init style lint doc
+.PHONY: $(1) all ci clean stage deps init style lint test doc
