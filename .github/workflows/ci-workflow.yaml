@@ -5,16 +5,11 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-      - uses: actions/checkout@v4
-      - uses: iamsauravsharma/create-dotenv@v2.0.1
+      - uses: actions/checkout@v7
         with:
-          file-path: '/tmp/.env'
-        env:
-          GITHUB_TOKEN: ${{ secrets.STUDIO_GITHUB_TOKEN }}
-      - uses: cliffano/command-docker-action@main
+          set-safe-directory: ${{ github.workspace }}
+      - uses: cliffano/command-docker-action@v2.0.0
         with:
-          command: 'make ci'
-          image: cliffano/kon-tiki:3.9.0
-          extra_path: '/root/.local/bin:/root/go/bin:/usr/local/go/bin:/usr/local/node/bin'
+          command: 'make deps ci'
+          image: cliffano/studio:3.2.0
           shell: bash
-          env_file: '/tmp/.env'
