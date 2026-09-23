@@ -1,4 +1,4 @@
-TFMAKE_VERSION = 1.1.1-pre.0
+TFMAKE_VERSION = 0.9.0-pre.0
 
 ################################################################
 TFLINT_VERSION = 0.63.1
@@ -72,6 +72,9 @@ deps: stage
 deps-extra-apt:
 	apt-get update
 	apt-get install -y markdownlint
+
+deps-upgrade:
+	echo "PLACEHOLDER"
 
 ################################################################
 # Test targets
