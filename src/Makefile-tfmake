@@ -4,7 +4,7 @@
 ################################################################
 
 # TFMake info
-TFMAKE_VERSION = 0.10.0
+TFMAKE_VERSION = 0.10.1-pre.0
 
 UPDATE_GH_ID = cliffano
 UPDATE_MAKEFILE = tfmake
