@@ -1,6 +1,17 @@
+################################################################
+# TFMake: Makefile for building Terraform modules
+# https://github.com/cliffano/tfmake
+################################################################
+
+# TFMake info
 TFMAKE_VERSION = 0.9.0-pre.0
 
-################################################################
+UPDATE_GH_ID = cliffano
+UPDATE_MAKEFILE = tfmake
+UPDATE_GENERATOR = terraform
+UPDATE_DOTFILES = .github/. .gitignore .rtk.json .tflint.hcl AGENTS.md
+UPDATE_PARTIALS = AVATAR BADGES BUILD_REPORTS DEVELOPERS_GUIDE
+
 TFLINT_VERSION = 0.63.1
 TERRAFORM_DOCS_VERSION = 0.24.0
 TRIVY_VERSION = 0.71.1
