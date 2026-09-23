@@ -4,6 +4,7 @@
 
 <!-- BEGIN:BADGES -->
 [![Build Status](https://github.com/gepeto/tfmakeexample/workflows/CI/badge.svg)](https://github.com/gepeto/tfmakeexample/actions?query=workflow%3ACI)
+[![Security Status](https://snyk.io/test/github/gepeto/tfmakeexample/badge.svg)](https://snyk.io/test/github/gepeto/tfmakeexample)
 <!-- END:BADGES -->
 
 # TfmakeExample
@@ -57,10 +58,13 @@ output "message_lowercase" {
 ## Colophon
 
 <!-- BEGIN:DEVELOPERS_GUIDE -->
-[Developer's Guide](https://cliffano.github.io/developers-guide-terraform.html)
+[Developer's Guide](https://gepeto.github.io/developers-guide-terraform.html)
 <!-- END:DEVELOPERS_GUIDE -->
 
 <!-- BEGIN:BUILD_REPORTS -->
+Build reports:
+
+* [Build report](https://gepeto.github.io/tfmakeexample/index.html)
 <!-- END:BUILD_REPORTS -->
 
 # Terraform Doc
