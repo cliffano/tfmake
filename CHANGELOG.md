@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+### Added
+- Add CodeQL code scanning workflow and Code Scanning Status badge
+
 ### Changed
 - Upgrade Ubuntu to 26.04
 - Upgrade cliffano/studio to 4.0.0

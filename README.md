@@ -4,6 +4,7 @@
 
 <!-- BEGIN:BADGES -->
 [![Build Status](https://github.com/cliffano/tfmake/actions/workflows/ci-workflow.yaml/badge.svg)](https://github.com/cliffano/tfmake/actions/workflows/ci-workflow.yaml)
+[![Code Scanning Status](https://github.com/cliffano/tfmake/workflows/CodeQL/badge.svg)](https://github.com/cliffano/tfmake/actions?query=workflow%3ACodeQL)
 <!-- END:BADGES -->
 
 # TFMake
