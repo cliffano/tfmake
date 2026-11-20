@@ -10,6 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Upgrade Ubuntu to 26.04
 - Upgrade cliffano/studio to 4.0.0
 - Restrict GitHub Actions workflows token permissions to contents read
+- Switch release workflows runner to ubuntu-slim
 
 ## 0.10.0 - 2026-09-23
 ### Added
